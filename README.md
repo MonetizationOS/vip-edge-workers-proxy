@@ -19,7 +19,7 @@ Read more about using MonetizationOS at [docs.monetizationos.com](https://docs.m
 
 You need:
 
-- A WordPress VIP site with edge workers.
+- A WordPress VIP environment that supports [Edge Workers](https://docs.wpvip.com/infrastructure/edge-servers/edge-workers/), and an authenticated [VIP-CLI](https://docs.wpvip.com/vip-cli/installing-vip-cli/).
 - Node.js 22+.
 - A MonetizationOS secret (`sk_`) key, and whole-body mode switched on for your organization. Without it, MonetizationOS answers 403 and pages are served unmodified.
 
@@ -30,7 +30,7 @@ npm install
 npm run build
 ```
 
-Deploy `build/mos-proxy/release.wasm` as your site's edge worker, with the [variables](#required-variables) below in its environment.
+Deploy `build/mos-proxy/release.wasm` as your site's edge worker, with the [variables](#required-variables) below in its environment. See [Deployment](#deployment).
 
 ## Required Variables
 
@@ -147,11 +147,13 @@ To run against a real org, copy [`.env.local.example`](.env.local.example) to `.
 
 ## Deployment
 
-Rebuild and deploy the new `build/mos-proxy/release.wasm`:
+Build the worker:
 
 ```sh
 npm run build
 ```
+
+Then publish `build/mos-proxy/release.wasm` with VIP-CLI, following WordPress VIP's [Edge Workers documentation](https://docs.wpvip.com/infrastructure/edge-servers/edge-workers/). Test on a non-production environment first.
 
 ## Repository layout
 
