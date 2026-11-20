@@ -1,0 +1,49 @@
+{
+    "name": "vip-edge-workers-proxy",
+    "version": "0.1.0",
+    "description": "A MonetizationOS proxy that runs as a WordPress VIP AssemblyScript edge worker",
+    "license": "MIT",
+    "type": "module",
+    "keywords": [
+        "wordpress-vip",
+        "edge-workers",
+        "assemblyscript",
+        "webassembly",
+        "lol-html"
+    ],
+    "scripts": {
+        "build": "node scripts/build.mjs",
+        "build:all": "npm run build -- hello && npm run build -- conformance && npm run build -- wire && npm run build",
+        "artifact:report": "node scripts/artifact-report.mjs",
+        "test:artifacts": "npm run build:all && node scripts/artifact-report.mjs --check",
+        "build:test": "node scripts/build.mjs --test",
+        "build:web": "node scripts/build.mjs && node scripts/build-web.mjs",
+        "web": "npm run build:web && node playground/server.mjs",
+        "serve": "node scripts/serve.mjs",
+        "test": "node scripts/build.mjs --test && node test/unit.mjs",
+        "test:e2e": "node scripts/build.mjs && node test/e2e.mjs",
+        "test:web": "npm run build:web && node test/smoke.mjs",
+        "test:live": "npm run build:web && node test/live-check.mjs",
+        "test:all": "npm run test:wire && npm run test:hello && npm run test && npm run test:e2e && npm run test:web",
+        "hello": "node scripts/build.mjs hello && node scripts/build-web.mjs hello && node playground/server.mjs",
+        "test:hello": "node scripts/build.mjs hello && node examples/hello/check.mjs",
+        "test:conformance": "node scripts/build.mjs conformance && node tools/conformance/check.mjs",
+        "test:conformance:live": "node tools/conformance/live-check.mjs",
+        "test:wire": "node scripts/build.mjs wire && node test/wire/check.mjs"
+    },
+    "dependencies": {
+        "@automattic/vip-edge-workers-sdk": "0.7.1",
+        "json-as": "^1.6.0"
+    },
+    "devDependencies": {
+        "assemblyscript": "^0.28.2",
+        "esbuild": "^0.28.2",
+        "html-rewriter-wasm": "0.4.1"
+    },
+    "config": {
+        "portedCoreVersion": "1.8.0"
+    },
+    "engines": {
+        "node": ">=22"
+    }
+}
